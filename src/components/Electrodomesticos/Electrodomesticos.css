@@ -176,6 +176,8 @@
 .btn-carrito:hover{
 
     transform:scale(1.02);
+
+    background:var(--color-fondo);
 }
 
 /* ========================= */

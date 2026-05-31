@@ -8,6 +8,8 @@ import { ropa } from '../Data/RopaD';
 
 function ProductoDetalle() {
 
+    const [cantidad, setCantidad] = useState(1);
+
     const { id } = useParams();
 
     const todosLosProductos = [
@@ -19,6 +21,44 @@ function ProductoDetalle() {
     const producto = todosLosProductos.find(
         p => p.id === Number(id)
     );
+
+    const agregarAlCarrito = () => {
+
+        const carrito =
+            JSON.parse(
+                localStorage.getItem('carrito')
+            ) || [];
+
+        const productoExistente =
+            carrito.find(
+                item =>
+                    item.id === producto.id &&
+                    item.imagen === imagenPrincipal
+            );
+
+        if (productoExistente) {
+
+            productoExistente.cantidad += cantidad;
+
+            productoExistente.imagen = imagenPrincipal;
+
+        } else {
+
+            carrito.push({
+                ...producto,
+                imagen: imagenPrincipal,
+                cantidad
+            });
+
+        }
+
+        localStorage.setItem(
+            'carrito',
+            JSON.stringify(carrito)
+        );
+
+        alert('Producto agregado al carrito');
+    };
 
     const [imagenPrincipal, setImagenPrincipal] = useState(
         producto.imagen
@@ -78,15 +118,31 @@ function ProductoDetalle() {
 
                         <div className="contador">
 
-                            <button>+</button>
+                            <button
+                                type="button"
+                                onClick={() => setCantidad(cantidad + 1)}
+                            >
+                                +
+                            </button>
 
-                            <span>1</span>
+                            <span>{cantidad}</span>
 
-                            <button>-</button>
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    cantidad > 1 &&
+                                    setCantidad(cantidad - 1)
+                                }
+                            >
+                                -
+                            </button>
 
                         </div>
 
-                        <button className="btn-carrito">
+                        <button
+                            className="btn-carrito"
+                            onClick={agregarAlCarrito}
+                        >
                             Añadir al Carrito
                         </button>
 

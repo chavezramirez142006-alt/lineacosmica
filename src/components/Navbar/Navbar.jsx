@@ -3,6 +3,7 @@ import { useState } from 'react';
 import logo from '../../assets/Linea.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -24,6 +25,14 @@ const Navbar = () => {
       </HashLink>
 
       <ul className={menuAbierto ? "nav-links active" : "nav-links"}>
+
+        <HashLink
+          smooth
+          to="/#inicio"
+          onClick={() => setMenuAbierto(false)}
+        >
+          <h4>Inicio</h4>
+        </HashLink>
 
         <HashLink
           smooth
@@ -56,6 +65,10 @@ const Navbar = () => {
         >
           <h4>Contacto</h4>
         </HashLink>
+
+        <Link to="/carrito">
+          Carrito
+        </Link>
 
       </ul>
 
